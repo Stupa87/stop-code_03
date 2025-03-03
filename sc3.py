@@ -45,5 +45,23 @@ def effettua_oridne():
         
         print(f"Ordine inserito in data: {data_ordine.strftime("%d/%m/%Y %H:%M")}")
         
+def mostra_ordini():
+    sql = """
+    SELECT o.id, o.cliente, o."data", p.nome, p.prezzo 
+    FROM ordini o 
+    INNER JOIN prodotti p ON o.prodotto_id = p.id
+    """
+    with sqlite3.connect(DB_NAME) as conn:
+        ordini = conn.execute(sql).fetchall
+    
+        if not ordini:
+            print("\nNessun ordine effettuato")
+        else:
+            print("\nOrdini effettuati:")
+            
+            for o in ordini:
+                print(f"{o[0]} - {o[1]} ha ordinato {0[3]} (€ {o[4]}) il {datetime.fromtimestamp(0[2]).strftime("%d/%m/%Y %H:%M")}")
+    
+      
 verifica_e_insersci_dati_iniziali()
 effettua_oridne()
