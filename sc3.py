@@ -47,10 +47,8 @@ def effettua_oridne():
         
 def mostra_ordini():
     sql = """
-    SELECT o.id, o.cliente, o."data", p.nome, p.prezzo 
-    FROM ordini o 
-    INNER JOIN prodotti p ON o.prodotto_id = p.id
-    """
+            SELECT o.id, o.cliente, o."data", p.nome, p.prezzo FROM ordini o INNER JOIN prodotti p ON o.prodotto_id = p.id
+          """
     with sqlite3.connect(DB_NAME) as conn:
         ordini = conn.execute(sql).fetchall
     
@@ -61,7 +59,26 @@ def mostra_ordini():
             
             for o in ordini:
                 print(f"{o[0]} - {o[1]} ha ordinato {0[3]} (€ {o[4]}) il {datetime.fromtimestamp(0[2]).strftime("%d/%m/%Y %H:%M")}")
-    
+
+def menu():
+    while True:
+        print("\n1. Mostra catalogo prodotti")
+        print("\n2. Mostra ordini effettuati")
+        print("\n3. Effettua un nuovo ordine")
+        print("\n4. Esci")
+        scelta = int(input("Scegli un opzione: ")) 
+        
+        if scelta == 1:
+            mostra_catalogo_prodotti()
+        elif scelta == 2:
+            mostra_ordini()
+        elif scelta == 3:
+            effettua_oridne()
+        elif scelta == 4:
+            break
+        else:
+            print("Scelta non valida")    
       
 verifica_e_insersci_dati_iniziali()
-effettua_oridne()
+menu()
+
